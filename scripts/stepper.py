@@ -70,6 +70,7 @@ def closeMotor():
 
 if __name__ == '__main__':
     try:
+        rospy.init_node('stepper_motor', anonymous=True)
         # Initialize stepper motors
         try:
             ch = Stepper()
@@ -92,7 +93,6 @@ if __name__ == '__main__':
             exit(1)
 
         # Initialize suscriber node
-        rospy.init_node('stepper_motor', anonymous=True)
         rospy.Subscriber("motor_config", StepperConfig, configMotor)
 
         rospy.on_shutdown(closeMotor)
