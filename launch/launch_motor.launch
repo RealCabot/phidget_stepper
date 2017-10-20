@@ -9,4 +9,7 @@
     <rosparam param="isLeft">false</rosparam>
     <rosparam param="serialId">420519</rosparam>
   </node>
+
+  <node name="motorTest" pkg="motor_test" type="test.py" output="screen">
+  </node>
 </launch>

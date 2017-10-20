@@ -2,7 +2,7 @@
 import rospy
 from phidget_stepper.msg import StepperConfig
 
-import time 
+import time
 from Phidget22.Devices.Stepper import *
 from Phidget22.PhidgetException import *
 from Phidget22.Phidget import *
@@ -32,8 +32,9 @@ def StepperAttached(e):
     except PhidgetException as e:
         print("Phidget Exception %i: %s" % (e.code, e.details))
         print("Press Enter to Exit...\n")
-        exit(1)   
-    
+        exit(1)
+
+
 def StepperDetached(e):
     detached = e
     try:
@@ -41,22 +42,28 @@ def StepperDetached(e):
     except PhidgetException as e:
         print("Phidget Exception %i: %s" % (e.code, e.details))
         print("Press Enter to Exit...\n")
-        exit(1)   
+        exit(1)
+
 
 def ErrorEvent(e, eCode, description):
     print("Error %i : %s" % (eCode, description))
 
+
 def PositionChangeHandler(e, position):
     print("Position: %f" % position)
 
+
 def configMotor(conf):
     global ch
+    print("Got em boss")
     if conf.toLeft == rospy.get_param("~isLeft"):
+
         ch.setEngaged(conf.engage)
         ch.setTargetPosition(conf.position)
         ch.setControlMode(conf.mode)
         ch.setAcceleration(conf.acceleration)
         ch.setVelocityLimit(conf.velocityLimit)
+
 
 def closeMotor():
     global ch
@@ -65,8 +72,9 @@ def closeMotor():
     except PhidgetException as e:
         print("Phidget Exception %i: %s" % (e.code, e.details))
         print("Press Enter to Exit...\n")
-        exit(1) 
+        exit(1)
     print("Closed Stepper device")
+
 
 if __name__ == '__main__':
     try:
@@ -94,8 +102,11 @@ if __name__ == '__main__':
 
         # Initialize suscriber node
         rospy.Subscriber("motor_config", StepperConfig, configMotor)
+        #print("Subscriber initialized")
+        # spin() simply keeps python from exiting until this node is stopped
+        rospy.spin()
 
-        rospy.on_shutdown(closeMotor)
 
     except rospy.ROSInterruptException:
+        rospy.on_shutdown(closeMotor)
         pass
