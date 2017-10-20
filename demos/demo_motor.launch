@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<launch>
+  
+  <include file="$(find phidget_stepper)/launch/launch_motor.launch"/>
+
+  <node name="commandTest" pkg="phidget_stepper" type="demo_commands.py" output="screen"/>
+
+</launch>

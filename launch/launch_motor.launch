@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <launch>
+  
   <node name="stepper_left" pkg="phidget_stepper" type="stepper.py" output="screen">
     <rosparam param="isLeft">true</rosparam>
     <rosparam param="serialId">420520</rosparam>
@@ -10,6 +11,4 @@
     <rosparam param="serialId">420519</rosparam>
   </node>
 
-  <node name="motorTest" pkg="motor_test" type="test.py" output="screen">
-  </node>
 </launch>
