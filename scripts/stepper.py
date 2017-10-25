@@ -48,21 +48,19 @@ def StepperDetached(e):
 def ErrorEvent(e, eCode, description):
     print("Error %i : %s" % (eCode, description))
 
-
 def PositionChangeHandler(e, position):
     print("Position: %f" % position)
 
 
 def configMotor(conf):
     global ch
-    print("Got em boss")
     if conf.toLeft == rospy.get_param("~isLeft"):
-
-        ch.setEngaged(conf.engage)
-        ch.setTargetPosition(conf.position)
+        print "Set motor commands: " + str(rospy.get_param("~isLeft"))
+        #ch.setTargetPosition(conf.position)
         ch.setControlMode(conf.mode)
         ch.setAcceleration(conf.acceleration)
         ch.setVelocityLimit(conf.velocityLimit)
+        ch.setEngaged(conf.engage)
 
 
 def closeMotor():
@@ -89,8 +87,7 @@ if __name__ == '__main__':
             ch.setOnAttachHandler(StepperAttached)
             ch.setOnDetachHandler(StepperDetached)
             ch.setOnErrorHandler(ErrorEvent)
-
-            ch.setOnPositionChangeHandler(PositionChangeHandler)
+            #ch.setOnPositionChangeHandler(PositionChangeHandler)
 
             print("Waiting for the Phidget Stepper Object to be attached...")
             SERIAL_ID = rospy.get_param('~serialId')
@@ -102,8 +99,7 @@ if __name__ == '__main__':
 
         # Initialize suscriber node
         rospy.Subscriber("motor_config", StepperConfig, configMotor)
-        #print("Subscriber initialized")
-        # spin() simply keeps python from exiting until this node is stopped
+        # spin() keeps python from exiting until this node is stopped
         rospy.spin()
 
 
